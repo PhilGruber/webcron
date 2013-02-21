@@ -1,4 +1,0 @@
-webcron
-=======
-
-Webinterface for cron

@@ -34,7 +34,6 @@ if (isset($_POST['save'])) {
 	foreach($_POST['data'] AS $id => $d) {
 		if ($d['state'] == 'deleted') {
 			unset($file[$id]);
-			echo "deleted<br />";
 		} else
 			$file[$id] = "{$d['m']}\t{$d['h']}\t{$d['dom']}\t{$d['mon']}\t{$d['dow']}\t{$d['cmd']}";
 	}

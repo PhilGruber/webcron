@@ -19,5 +19,5 @@ function add() {
 
 function del(id) {
 	$("#state-"+id).val('deleted');
-	$("#row-"+id).hide();
+	$("#row-"+id).find('td').slideUp(300);
 }

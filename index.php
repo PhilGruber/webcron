@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-
 $crontab = shell_exec('crontab -l');
 $lines = explode("\n", $crontab);
 
@@ -50,8 +48,6 @@ if (isset($_POST['save'])) {
 	exec('crontab /tmp/crontab.txt');
 	$message = 'Crontab was saved.';
 }
-	print_r($_POST);
-	print_r($data);
 ?>
 <html>
 	<head>

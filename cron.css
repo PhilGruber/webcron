@@ -1,5 +1,33 @@
+body {
+	font-family: Verdana;
+	padding: 30px;
+}
 
-input[type=text] {
+input.num {
 	width: 30px;
 	border: 1px solid #BBB;
+}
+
+div.notice {
+	border: 1px solid green;
+	background-color: #EFE;
+	color: green;
+	padding: 30px;
+	box-shadow: 2px 2px 3px rgba(100, 100, 100, 0.5);
+	margin: 30px 0 30px 0;
+}
+
+input[type=submit] {
+	border: 0px solid #EfE;
+	background-color: #DFD;
+	margin: 20px;
+	padding: 5px 30px 5px 30px;
+	box-shadow: 2px 2px 3px rgba(100, 100, 100, 0.5);
+	border-radius: 5px;
+	color: green;
+}
+
+table.cron {
+	width: 500px;
+	background-color: #EFE;
 }

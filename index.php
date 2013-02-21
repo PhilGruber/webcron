@@ -3,12 +3,16 @@
 $crontab = shell_exec('crontab -l');
 $lines = explode("\n", $crontab);
 
-
 $data = array();
+$file = array();
 foreach ($lines as $id => $l) {
 	$l = trim($l);
-	/* FIXME */
-	if (empty($l) || $l[0] == '#')
+	$file[$id] = $l;
+
+	if (strpos($l, '#') !== false)
+		$l = substr($l, 0, strpos($l, '#'));
+
+	if (empty($l))
 		continue;
 	$l = preg_replace('![ \t]+!', ' ', $l);
 	if ($l[0] == '@')
@@ -25,39 +29,59 @@ foreach ($lines as $id => $l) {
 	);
 }
 
-if (false)
+if (isset($_POST['save'])) {
+	foreach($_POST['data'] AS $id => $d)
+		$file[$id] = "{$d['m']}\t{$d['h']}\t{$d['dom']}\t{$d['mon']}\t{$d['dow']}\t{$d['cmd']}";
+	$output = '';
+	foreach ($file as $l)
+		$output .= "$l\n";
+	file_put_contents('/tmp/crontab.txt', $output);
 	exec('crontab /tmp/crontab.txt');
+	$message = 'Crontab was saved.';
+}
 ?>
 <html>
 	<head>
 		<link rel='stylesheet' type='text/css' href='cron.css' />
 	</head>
 	<body>
+	<?php if (isset($message)): ?>
+	<div class='notice'>
+		<?= $message ?>
+	</div>
+	<?php endif; ?>
 		<form method='POST'>
-		<table>
+		<table class='cron'>
 			<tr>
+				<td>Time</td>
 				<td>Day</td>
 				<td>Month</td>
-				<td>Time</td>
 				<td>Weekday</td>
 				<td>Command</td>
+				<td></td>
 			</tr>
 		<?php foreach ($data as $id => $e): ?>
 		<tr>
-			<td><input type='text' name='dom[<?= $id ?>]' value='<?= $e['dom'] ?>' /></td>
-			<td><input type='text' name='mon[<?= $id ?>]' value='<?= $e['mon'] ?>' /></td>
 			<td>
-				<input type='text' name='m[<?= $id ?>]' value='<?= $e['m'] ?>' />:<input type='text' name='h[<?= $id ?>]' value='<?= $e['h'] ?>' />
+				<input class='num' type='text' name='data[<?= $id ?>][h]' value='<?= $e['h'] ?>' />
+				<input class='num' type='text' name='data[<?= $id ?>][m]' value='<?= $e['m'] ?>' />
+			</td>
+			<td><input class='num' type='text' name='data[<?= $id ?>][dom]' value='<?= $e['dom'] ?>' /></td>
+			<td><input class='num' type='text' name='data[<?= $id ?>][mon]' value='<?= $e['mon'] ?>' /></td>
+			<td>
+				<input class='num' type='text' name='data[<?= $id ?>][dow]' value='<?= $e['dow'] ?>' />
 			</td>
 			<td>
-				<input type='text' name='dow[<?= $id ?>]' value='<?= $e['dow'] ?>' />
+				<input class='' type='text' name='data[<?= $id ?>][cmd]' value='<?= $e['cmd'] ?>' />
 			</td>
 			<td>
-				<?= $e['cmd'] ?>
+				<input type='hidden' name='data[<?= $id ?>][state]' value='normal' />
+				<img onclick='delete(<?= $id ?>);' src='' alt='X' />
 			</td>
 		</tr>
 		<?php endforeach; ?>
 		</table>
+		<input type='submit' value='save' name='save' />
 		</form>
 	</body>
 </html>

@@ -3,6 +3,10 @@ body {
 	padding: 30px;
 }
 
+div.crontab {
+	width: 500px;
+}
+
 input.num {
 	width: 30px;
 	border: 1px solid #BBB;
@@ -27,7 +31,14 @@ input[type=submit] {
 	color: green;
 }
 
-table.cron {
-	width: 500px;
+table#cron {
+	width: 100%;
 	background-color: #EFE;
+	border: 1px solid green;
+	box-shadow: 2px 2px 3px rgba(100, 100, 100, 0.5);
+}
+
+.addbutton {
+	float: right;
+	margin: 3px 9px 0 0;
 }

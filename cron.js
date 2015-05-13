@@ -1,5 +1,3 @@
-
-
 function add() {
 	$("#cron").append("<tr><td>\
 				<input class='num' type='text' name='data["+linecount+"][h]' />\
@@ -20,4 +18,9 @@ function add() {
 function del(id) {
 	$("#state-"+id).val('deleted');
 	$("#row-"+id).find('td').slideUp(300);
+	console.log("Deleted row "+id);
+}
+
+function debug() {
+	$('pre').toggleClass('invisible');
 }
